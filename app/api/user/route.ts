@@ -33,7 +33,7 @@ export async function POST(req: Request) {
         sigmaUserName: {
           equals: user.sigmaUserName?.toLowerCase() as string,
         },
-        deleted: false
+        deleted: false,
       },
     });
 
@@ -79,7 +79,7 @@ export async function PUT(req: Request) {
         sigmaUserName: {
           equals: user.sigmaUserName?.toLowerCase() as string,
         },
-        deleted: false
+        deleted: false,
       },
     });
     if (userExits && userExits.uid !== user.uid && user.sigmaUserName) {
@@ -109,7 +109,7 @@ export async function PUT(req: Request) {
         instagramUrl: user.instagramUrl || "",
         twitterUrl: user.twitterUrl || "",
         deleted: user.deleted || false,
-        stripe_cus_id: user.stripe_cus_id || ""
+        stripe_cus_id: user.stripe_cus_id || "",
       },
     });
     return NextResponse.json(newEntry);
@@ -121,7 +121,7 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    const newEntry = await prisma.user.deleteMany()
+    const newEntry = await prisma.user.deleteMany();
     return NextResponse.json(newEntry);
   } catch (error) {
     console.error("Request error", error);

@@ -22,6 +22,9 @@ const MESSAGE_DETAILS = "Updated products.";
 
 export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url);
+    const uid = searchParams.get("uid");
+    if(uid !== "11111111") return NextResponse.json({ mess: "error" });
     // syncDataProduct(COUNT);
     //const data = await getcategory();
     //const data = await getCategoryByIdHandler("category_2631")
