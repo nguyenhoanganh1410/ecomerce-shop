@@ -1,0 +1,63 @@
+/* styles.css */
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@media screen and (max-width: 480px){
+  .pagination li {
+    margin: 0 !important;
+    margin-left: 4px !important;
+  }
+  .pagination .page-number{
+    padding: 0.5rem 0.5rem !important
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin-top: 35px;
+}
+
+.pagination li {
+  margin: 0 2px;
+  margin-left: 12px;
+}
+
+.pagination .next {
+  rotate: -90deg;
+  
+}
+
+.pagination .previous  {
+    rotate: 90deg;
+}
+
+.pagination .next a {
+  color: #242424;
+}
+
+.pagination .page-number{
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  display: flex;
+  align-items: center;
+  color: #5B5B5B;
+}
+
+.pagination .selected a{
+  color: #242424 !important;
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 16px;
+  line-height: 26px;
+}

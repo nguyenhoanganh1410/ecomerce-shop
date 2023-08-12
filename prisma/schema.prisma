@@ -1,0 +1,133 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model cart {
+  id               Int     @id @default(autoincrement())
+  email            String
+  idProduct        String
+  idSubProduct     String
+  quantity         Int
+  giftSigma        String?
+  giftUserId       String?
+  idWishListOfGift String?
+  giftEmail        String?
+}
+
+model wishlist {
+  id           Int    @id @default(autoincrement())
+  uid          String
+  idProduct    String
+  idSubProduct String
+}
+
+model User {
+  id                 Int               @id @default(autoincrement())
+  uid                String            @unique
+  avatarUrl          String?
+  backgroundImageUrl String?
+  firstName          String?
+  lastName           String?
+  sigmaUserName      String?
+  message            String?
+  onlyFansUrl        String?
+  titokUrl           String?
+  twitterUrl         String?
+  instagramUrl       String?
+  stripe_cus_id      String?
+  deleted            Boolean           @default(false)
+  shippingAddress    ShippingAddress[]
+  Billing            Billing[]
+}
+
+model ShippingAddress {
+  id        Int     @id @default(autoincrement())
+  firstName String  @db.VarChar(100)
+  lastName  String  @db.VarChar(100)
+  address   String  @db.VarChar(100)
+  apartment String? @db.VarChar(100)
+  city      String  @db.VarChar(100)
+  country   String
+  state     String
+  zipCode   String
+  deleted   Boolean @default(false)
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+model Billing {
+  id           Int     @id @default(autoincrement())
+  firstName    String  @db.VarChar(100)
+  lastName     String  @db.VarChar(100)
+  cardNumber   String
+  expiresOn    String
+  securityCode String
+  address      String  @db.VarChar(100)
+  apartment    String? @db.VarChar(100)
+  city         String  @db.VarChar(100)
+  country      String
+  state        String
+  zipCode      String
+  deleted      Boolean @default(false)
+  author       User    @relation(fields: [authorId], references: [id])
+  authorId     Int
+}
+
+model Order {
+  id             Int         @id @default(autoincrement())
+  trackingNumber String      @unique
+  uid            String      @db.VarChar(100)
+  total          Int
+  discount       Int
+  shippingEst    Int
+  taxes          Int
+  status         Int         @default(0) //0: created 1: 2: successfully
+  paymentStatus  Boolean
+  email          String
+  phone          String
+  addressBilling String
+  zipCode        String
+  cardNumber     String
+  expiryDate     String
+  securityCode   String
+  deleted        Boolean     @default(false)
+  createdAt      DateTime    @default(now())
+  orderLine      OrderLine[]
+}
+
+model OrderLine {
+  id              Int            @id @default(autoincrement())
+  status          Int            @default(0) //0: created 1: 2: successfully
+  ownerGift       String //0: bought my seft - 1: gift
+  name            String
+  email           String
+  phone           String
+  addressShipping String
+  deleted         Boolean        @default(false)
+  order           Order          @relation(fields: [orderId], references: [id])
+  orderId         Int
+  productOrder    ProductOrder[]
+}
+
+model ProductOrder {
+  id          Int       @id @default(autoincrement())
+  name        String
+  brand       String
+  size        String
+  color       String
+  image       String
+  quanity     Int
+  price       Int
+  orderLine   OrderLine @relation(fields: [orderLineId], references: [id])
+  orderLineId Int
+}

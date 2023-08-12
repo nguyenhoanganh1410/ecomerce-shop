@@ -1,0 +1,12 @@
+.carousel-images .slick-next {
+  right: -10px !important;
+}
+.carousel-images .slick-prev {
+  left: -8px;
+  z-index: 100;
+}
+
+.carousel-images .slick-initialized .slick-slide {
+  padding-left: 6px;
+  padding-right: 6px;
+}
